@@ -12,7 +12,7 @@ import json
 
 # ========== 数据层 ==========
 
-SCENIC_SPOTS = [
+景点列表 = [
     {
         "id": 1,
         "name": "南湖红船（中共一大会址）",
@@ -134,7 +134,7 @@ SCENIC_SPOTS = [
     }
 ]
 
-ROUTES = [
+路线推荐 = [
     {
         "id": "A",
         "name": "红色经典之旅（半日游）",
@@ -187,7 +187,7 @@ ROUTES = [
     }
 ]
 
-FOOD_RECOMMENDATIONS = [
+美食推荐 = [
     {
         "name": "嘉兴粽子",
         "specialty": "五芳斋粽子",
@@ -222,7 +222,7 @@ FOOD_RECOMMENDATIONS = [
     }
 ]
 
-TRANSPORT_INFO = {
+交通信息 = {
     "external": {
         "高铁": [
             "嘉兴南站（推荐）- 距南湖景区约6公里，打车15分钟",
@@ -256,7 +256,7 @@ TRANSPORT_INFO = {
     }
 }
 
-TICKET_INFO = {
+门票信息 = {
     "门票": "南湖景区：免费开放（部分景点需购票）",
     "联票": "南湖景区联票：60元/人（含湖心岛船票、壕股塔）",
     "红船": "红船瞻仰：免费（需预约）",
@@ -268,14 +268,14 @@ TICKET_INFO = {
 
 # ========== 工具函数 ==========
 
-def clear_screen():
+def 清屏():
     """清屏"""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def print_banner():
+def 打印标题():
     """打印程序标题"""
-    banner = (
+    标题画面 = (
         "\n"
         "  +====================================================+\n"
         "  |                                                    |\n"
@@ -287,97 +287,97 @@ def print_banner():
         "  |                                                    |\n"
         "  +====================================================+\n"
     )
-    print(banner)
+    print(标题画面)
 
 
-def print_separator(char="─", length=56):
+def 打印分隔线(字符="─", 长度=56):
     """打印分隔线"""
-    print(f"  {char * length}")
+    print(f"  {字符 * 长度}")
 
 
-def print_menu_title(title):
+def 打印菜单标题(标题):
     """打印菜单标题"""
     print()
-    print(f"  📌 {title}")
-    print_separator()
+    print(f"  📌 {标题}")
+    打印分隔线()
 
 
-def print_info(label, value):
+def 打印信息(标签, 值):
     """打印信息项"""
-    print(f"  📍 {label}：{value}")
+    print(f"  📍 {标签}：{值}")
 
 
-def wait_for_enter():
+def 等待回车():
     """等待用户按回车继续"""
     input("\n  ⏎ 按回车键继续...")
 
 
-def print_subtitle(text):
+def 打印小标题(文本):
     """打印小标题"""
-    print(f"\n  ┌─ {text} ─────────────────────────────┐")
+    print(f"\n  ┌─ {文本} ─────────────────────────────┐")
 
 
-def print_text(text, indent=True):
+def 打印文本(文本, 缩进=True):
     """打印文本，自动换行"""
-    prefix = "  " if indent else ""
-    print(f"{prefix}{text}")
+    前缀 = "  " if 缩进 else ""
+    print(f"{前缀}{文本}")
 
 
 # ========== 功能模块 ==========
 
-def show_spot_detail(spot):
+def 显示景点详情(景点):
     """显示单个景点详情"""
-    clear_screen()
-    print_banner()
+    清屏()
+    打印标题()
     print()
-    print(f"  🏛️  【{spot['name']}】")
-    print_separator("═")
-    print_info("类别", spot["category"])
-    print_info("评分", spot["rating"])
-    print_info("建议游览时长", spot["duration"])
+    print(f"  🏛️  【{景点['name']}】")
+    打印分隔线("═")
+    打印信息("类别", 景点["category"])
+    打印信息("评分", 景点["rating"])
+    打印信息("建议游览时长", 景点["duration"])
     print()
-    print_subtitle("景点介绍")
-    print_text(spot["desc"])
+    打印小标题("景点介绍")
+    打印文本(景点["desc"])
     print()
-    print_subtitle("历史背景")
-    print_text(spot["history"])
+    打印小标题("历史背景")
+    打印文本(景点["history"])
     print()
-    print_subtitle("游览小贴士")
-    print_text(spot["tips"])
+    打印小标题("游览小贴士")
+    打印文本(景点["tips"])
 
 
-def list_all_spots():
+def 列出所有景点():
     """列出所有景点"""
-    clear_screen()
-    print_banner()
-    print_menu_title("南湖景点一览")
+    清屏()
+    打印标题()
+    打印菜单标题("南湖景点一览")
     
     # 按类别分组
-    categories = {}
-    for spot in SCENIC_SPOTS:
-        cat = spot["category"]
-        if cat not in categories:
-            categories[cat] = []
-        categories[cat].append(spot)
+    分类 = {}
+    for 景点 in 景点列表:
+        类别名 = 景点["category"]
+        if 类别名 not in 分类:
+            分类[类别名] = []
+        分类[类别名].append(景点)
     
-    for cat, spots in categories.items():
-        print(f"\n  ▸ {cat}")
-        for spot in spots:
-            print(f"    [{spot['id']}] {spot['name']}  {spot['rating']}")
+    for 类别名, 该类景点 in 分类.items():
+        print(f"\n  ▸ {类别名}")
+        for 景点 in 该类景点:
+            print(f"    [{景点['id']}] {景点['name']}  {景点['rating']}")
     
     print()
-    print_separator()
+    打印分隔线()
     
     while True:
         try:
-            choice = input("  请输入景点编号查看详情（0返回主菜单）：")
-            if choice == "0":
+            选择 = input("  请输入景点编号查看详情（0返回主菜单）：")
+            if 选择 == "0":
                 return
-            spot_id = int(choice)
-            spot = next((s for s in SCENIC_SPOTS if s["id"] == spot_id), None)
-            if spot:
-                show_spot_detail(spot)
-                wait_for_enter()
+            景点编号 = int(选择)
+            景点 = next((s for s in 景点列表 if s["id"] == 景点编号), None)
+            if 景点:
+                显示景点详情(景点)
+                等待回车()
             else:
                 print("  ❌ 无效编号，请重新输入。")
                 continue
@@ -386,46 +386,46 @@ def list_all_spots():
             continue
 
 
-def search_spots():
+def 搜索景点():
     """搜索景点"""
-    clear_screen()
-    print_banner()
-    print_menu_title("🔍 搜索景点")
+    清屏()
+    打印标题()
+    打印菜单标题("🔍 搜索景点")
     
-    keyword = input("  请输入关键词（名称/类别/描述）：").strip()
-    if not keyword:
+    关键词 = input("  请输入关键词（名称/类别/描述）：").strip()
+    if not 关键词:
         print("  未输入关键词。")
-        wait_for_enter()
+        等待回车()
         return
     
-    results = []
-    for spot in SCENIC_SPOTS:
-        if (keyword in spot["name"] or 
-            keyword in spot["category"] or 
-            keyword in spot["desc"]):
-            results.append(spot)
+    搜索结果 = []
+    for 景点 in 景点列表:
+        if (关键词 in 景点["name"] or 
+            关键词 in 景点["category"] or 
+            关键词 in 景点["desc"]):
+            搜索结果.append(景点)
     
-    if not results:
-        print(f"\n  未找到包含{keyword}的景点。")
-        wait_for_enter()
+    if not 搜索结果:
+        print(f"\n  未找到包含{关键词}的景点。")
+        等待回车()
         return
     
-    print(f"\n  找到 {len(results)} 个相关景点：")
-    for spot in results:
-        print(f"  [{spot['id']}] {spot['name']} - {spot['category']}")
-        print(f"        {spot['desc'][:50]}...")
+    print(f"\n  找到 {len(搜索结果)} 个相关景点：")
+    for 景点 in 搜索结果:
+        print(f"  [{景点['id']}] {景点['name']} - {景点['category']}")
+        print(f"        {景点['desc'][:50]}...")
     
     print()
     while True:
         try:
-            choice = input("  输入编号查看详情（0返回）：")
-            if choice == "0":
+            选择 = input("  输入编号查看详情（0返回）：")
+            if 选择 == "0":
                 return
-            spot_id = int(choice)
-            spot = next((s for s in results if s["id"] == spot_id), None)
-            if spot:
-                show_spot_detail(spot)
-                wait_for_enter()
+            景点编号 = int(选择)
+            景点 = next((s for s in 搜索结果 if s["id"] == 景点编号), None)
+            if 景点:
+                显示景点详情(景点)
+                等待回车()
                 return
             else:
                 print("  ❌ 无效编号。")
@@ -433,73 +433,73 @@ def search_spots():
             print("  ❌ 请输入数字。")
 
 
-def show_routes():
+def 显示路线():
     """显示推荐路线"""
-    clear_screen()
-    print_banner()
-    print_menu_title("🗺️ 推荐游览路线")
+    清屏()
+    打印标题()
+    打印菜单标题("🗺️ 推荐游览路线")
     
-    for route in ROUTES:
-        print(f"\n  ┌─ 路线{route['id']}：{route['name']}")
-        print(f"  ├ 时长：{route['duration']}")
-        print(f"  ├ 概述：{route['desc']}")
+    for 路线 in 路线推荐:
+        print(f"\n  ┌─ 路线{路线['id']}：{路线['name']}")
+        print(f"  ├ 时长：{路线['duration']}")
+        print(f"  ├ 概述：{路线['desc']}")
         print(f"  ├ 包含景点：", end="")
-        spot_names = []
-        for sid in route["spots"]:
-            spot = next(s for s in SCENIC_SPOTS if s["id"] == sid)
-            spot_names.append(spot["name"])
-        print("、".join(spot_names))
+        景点名称列表 = []
+        for 景点编号 in 路线["spots"]:
+            景点 = next(s for s in 景点列表 if s["id"] == 景点编号)
+            景点名称列表.append(景点["name"])
+        print("、".join(景点名称列表))
         print(f"  └ 行程安排：")
-        for step in route["schedule"]:
-            print(f"      • {step}")
+        for 步骤 in 路线["schedule"]:
+            print(f"      • {步骤}")
     
-    wait_for_enter()
+    等待回车()
 
 
-def show_transport():
+def 显示交通():
     """显示交通信息"""
-    clear_screen()
-    print_banner()
-    print_menu_title("🚗 交通指南")
+    清屏()
+    打印标题()
+    打印菜单标题("🚗 交通指南")
     
     print("\n  ── 外部交通 ──")
-    for mode, details in TRANSPORT_INFO["external"].items():
-        print(f"\n  ▸ {mode}")
-        for d in details:
-            print(f"    • {d}")
+    for 方式, 详情列表 in 交通信息["external"].items():
+        print(f"\n  ▸ {方式}")
+        for 详情 in 详情列表:
+            print(f"    • {详情}")
     
     print("\n  ── 内部交通 ──")
-    for mode, details in TRANSPORT_INFO["internal"].items():
-        print(f"\n  ▸ {mode}")
-        for d in details:
-            print(f"    • {d}")
+    for 方式, 详情列表 in 交通信息["internal"].items():
+        print(f"\n  ▸ {方式}")
+        for 详情 in 详情列表:
+            print(f"    • {详情}")
     
-    wait_for_enter()
+    等待回车()
 
 
-def show_food():
+def 显示美食():
     """显示美食推荐"""
-    clear_screen()
-    print_banner()
-    print_menu_title("🍜 嘉兴美食推荐")
+    清屏()
+    打印标题()
+    打印菜单标题("🍜 嘉兴美食推荐")
     
-    for food in FOOD_RECOMMENDATIONS:
-        print(f"\n  ─── {food['name']} ───")
-        print(f"  招牌：{food['specialty']}")
-        print(f"  介绍：{food['desc']}")
-        print(f"  推荐去处：{food['where']}")
+    for 美食 in 美食推荐:
+        print(f"\n  ─── {美食['name']} ───")
+        print(f"  招牌：{美食['specialty']}")
+        print(f"  介绍：{美食['desc']}")
+        print(f"  推荐去处：{美食['where']}")
     
-    wait_for_enter()
+    等待回车()
 
 
-def show_ticket():
+def 显示门票():
     """显示门票信息"""
-    clear_screen()
-    print_banner()
-    print_menu_title("🎫 门票及开放信息")
+    清屏()
+    打印标题()
+    打印菜单标题("🎫 门票及开放信息")
     
-    for key, val in TICKET_INFO.items():
-        print_info(key, val)
+    for 键, 值 in 门票信息.items():
+        打印信息(键, 值)
     
     print()
     print("  📌 温馨提示：")
@@ -508,16 +508,16 @@ def show_ticket():
     print("  • 景区内禁止无人机飞行（经批准除外）")
     print("  • 注意保护文物，请勿触摸红船及馆藏文物")
     
-    wait_for_enter()
+    等待回车()
 
 
-def show_weather_tips():
+def 显示天气贴士():
     """显示游览建议"""
-    clear_screen()
-    print_banner()
-    print_menu_title("🌤️ 最佳游览时间及建议")
+    清屏()
+    打印标题()
+    打印菜单标题("🌤️ 最佳游览时间及建议")
     
-    tips_content = [
+    建议内容列表 = [
         ("最佳季节", "3-5月、9-11月，气温适宜，景色最美"),
         ("春季", "春暖花开，烟雨朦胧，最能感受烟雨楼的意境"),
         ("夏季", "荷花盛开，但天气炎热，注意防暑防晒"),
@@ -528,80 +528,78 @@ def show_weather_tips():
         ("携带物品", "身份证（纪念馆需凭身份证领票）、水、相机")
     ]
     
-    for title, content in tips_content:
-        print_info(title, content)
+    for 标题, 内容 in 建议内容列表:
+        打印信息(标题, 内容)
     
-    wait_for_enter()
+    等待回车()
 
 
-def show_history():
+def 显示历史():
     """显示红色历史"""
-    clear_screen()
-    print_banner()
-    print_menu_title("🚩 南湖红色历史")
+    清屏()
+    打印标题()
+    打印菜单标题("🚩 南湖红色历史")
     
-    history_content = """
-  中共一大与南湖红船
-  ═════════════════════════════════════
+    历史内容 = ("""
+  1921年7月23日，中国共产党第一次全国代表大会在上海法租界
+  望志路106号（今兴业路76号）秘密开幕。
 
-  1921年7月23日，中国共产党第一次全国代表大会在上海
-  法租界望志路106号（今兴业路76号）秘密开幕。
+  7月30日晚，一名陌生男子闯入会场，代表们意识到危险，
+  会议被迫中断。大部分代表转移到上海李达的寓所商议
+  续会地点。李达的妻子王会悟建议到嘉兴南湖继续开会。
 
-  7月30日晚，会议遭法租界巡捕袭扰，被迫中断。
-  代表们决定转移，李达夫人王会悟建议到嘉兴南湖继续开会。
+  8月初，代表们分批乘火车来到嘉兴，在南湖的一艘游船上
+  举行了最后一天的会议。会议通过了《中国共产党纲领》
+  和《关于当前实际工作的决议》，选举陈独秀为中央局书记，
+  庄严宣告了中国共产党的诞生。
 
-  8月初，代表们分两批抵达嘉兴：
-  • 毛泽东、董必武、陈潭秋等乘早班火车先到
-  • 其余代表乘后班火车抵达
-
-  王会悟在南湖预订了一艘画舫（游船），
-  代表们以游湖为掩护，在船上继续会议。
-
-  会议通过了《中国共产党纲领》和《关于当前实际工作的决议》，
-  选举陈独秀为中央局书记，宣告中国共产党正式成立。
-
-  这艘画舫被称为"南湖红船"，
+  这艘游船就是后来被命名为「南湖红船」的革命摇篮，
   成为中国革命源头的象征。
 
-  ★ 红船精神：
-    开天辟地、敢为人先的首创精神
-    坚定理想、百折不挠的奋斗精神
-    立党为公、忠诚为民的奉献精神
-"""
-    print(history_content)
-    wait_for_enter()
-
-
-def show_about():
-    """显示关于程序"""
-    clear_screen()
-    print_banner()
-    print_menu_title("📱 关于本程序")
-    print("""
-  嘉兴南湖导游系统 v1.0
-  Nanhu Tour Guide System
-
-  功能特色：
-  • 景点详细介绍与搜索
-  • 多主题游览路线推荐
-  • 红色历史文化展示
-  • 交通、美食实用信息
-  • 门票预约与开放时间
-
-  开发语言：Python 3
-  数据来源：南湖景区官方资料
-  适用平台：Windows / macOS / Linux
-  ____________________________________
-  
-  🌊 嘉兴南湖 —— 中国共产党的诞生地
-  🚩 欢迎您前来感受红色文化，领略江南风光！
+  「红船精神」
+  开天辟地、敢为人先的首创精神
+  坚定理想、百折不挠的奋斗精神
+  立党为公、忠诚为民的奉献精神
 """)
-    wait_for_enter()
+    print(历史内容)
+    等待回车()
 
 
-def interactive_qa():
+def 显示关于():
+    """显示关于信息"""
+    清屏()
+    打印标题()
+    打印菜单标题("📱 关于本系统")
+    print("""
+  ┌────────────────────────────────────┐
+  │                                    │
+  │   嘉兴南湖导游系统 v1.0            │
+  │   Nanhu Tour Guide System          │
+  │                                    │
+  │   功能特色：                       │
+  │   • 南湖8大景点详细介绍            │
+  │   • 4条推荐游览路线                │
+  │   • 中共一大红色历史                │
+  │   • 交通、美食、门票实用信息       │
+  │   • 智能问答快速解答                │
+  │                                    │
+  │   数据来源：南湖景区官方资料       │
+  │   制作：嘉兴文旅支持                │
+  │                                    │
+  │   本程序仅供学习参考               │
+  │   景点信息以景区实际公告为准       │
+  │                                    │
+  └────────────────────────────────────┘
+  
+  嘉兴南湖 —— 红色起点，江南明珠。
+  欢迎您来到嘉兴，领略江南风光！
+""")
+    等待回车()
+
+
+def 互动问答():
     """智能问答功能"""
-    qa_data = {
+    问答数据 = {
         "红船在哪里": "红船位于南湖湖心岛南侧，需乘船上岛参观。",
         "怎么预约": "关注微信公众号「南湖景区」进行预约，或现场扫码预约。",
         "门票多少钱": "南湖景区免费开放，部分景点如湖心岛船票、壕股塔需购票，联票60元/人。",
@@ -613,44 +611,44 @@ def interactive_qa():
         "红船精神": "红船精神：开天辟地、敢为人先的首创精神；坚定理想、百折不挠的奋斗精神；立党为公、忠诚为民的奉献精神。",
     }
     
-    clear_screen()
-    print_banner()
-    print_menu_title("💬 智能问答")
+    清屏()
+    打印标题()
+    打印菜单标题("💬 智能问答")
     print("  你可以问我以下问题（输入关键词即可）：")
     print("  红船在哪里 / 怎么预约 / 门票多少钱 / 开放时间")
     print("  纪念馆开放时间 / 怎么去南湖 / 游览多久 / 红船精神")
     print("  附近还有什么 / 推荐路线")
     print()
     
-    count = 0
-    while count < 5:  # 最多连续问5次
-        question = input("  ❓ 请输入问题（输入0退出问答）：").strip()
-        if question == "0":
+    计数 = 0
+    while 计数 < 5:  # 最多连续问5次
+        问题 = input("  ❓ 请输入问题（输入0退出问答）：").strip()
+        if 问题 == "0":
             break
         
-        if not question:
+        if not 问题:
             continue
         
         # 简单匹配
-        answered = False
-        for keyword, answer in qa_data.items():
-            if any(kw in question for kw in keyword.split("、")):
-                print(f"\n  💡 {answer}\n")
-                answered = True
+        已回答 = False
+        for 关键词, 答案 in 问答数据.items():
+            if any(关键字 in 问题 for 关键字 in 关键词.split("、")):
+                print(f"\n  💡 {答案}\n")
+                已回答 = True
                 break
         
-        if not answered:
+        if not 已回答:
             print("\n  🤔 抱歉，我不太理解这个问题。请换个方式问问看。\n")
             print("  你也可以使用主菜单的功能查看详细信息。\n")
         
-        count += 1
+        计数 += 1
 
 
 # ========== 主菜单 ==========
 
-def main_menu():
+def 主菜单():
     """显示主菜单"""
-    menu_items = [
+    菜单项列表 = [
         ("1", "🏛️  景点导览", "查看所有景点详细介绍"),
         ("2", "🔍  搜索景点", "按关键词搜索景点"),
         ("3", "🗺️  游览路线", "推荐游览路线规划"),
@@ -664,60 +662,60 @@ def main_menu():
         ("q", "🚪  退出程序", "退出导游系统"),
     ]
     
-    clear_screen()
-    print_banner()
-    print_menuTitle = lambda title: print(f"  📌 {title}") or print_separator()
-    print_menuTitle("主菜单")
+    清屏()
+    打印标题()
+    print(f"  📌 主菜单")
+    打印分隔线()
     
-    for num, name, desc in menu_items:
-        print(f"  [{num}] {name}")
-        print(f"       {desc}")
+    for 编号, 名称, 描述 in 菜单项列表:
+        print(f"  [{编号}] {名称}")
+        print(f"       {描述}")
     
     print()
 
 
-def run():
+def 运行():
     """程序主循环"""
-    menu_actions = {
-        "1": list_all_spots,
-        "2": search_spots,
-        "3": show_routes,
-        "4": show_history,
-        "5": show_transport,
-        "6": show_food,
-        "7": show_ticket,
-        "8": show_weather_tips,
-        "9": interactive_qa,
-        "0": show_about,
+    菜单动作 = {
+        "1": 列出所有景点,
+        "2": 搜索景点,
+        "3": 显示路线,
+        "4": 显示历史,
+        "5": 显示交通,
+        "6": 显示美食,
+        "7": 显示门票,
+        "8": 显示天气贴士,
+        "9": 互动问答,
+        "0": 显示关于,
     }
     
     while True:
-        main_menu()
-        choice = input("  ⚡ 请选择功能：").strip().lower()
+        主菜单()
+        选择 = input("  ⚡ 请选择功能：").strip().lower()
         
-        if choice == "q":
-            clear_screen()
-            print_banner()
+        if 选择 == "q":
+            清屏()
+            打印标题()
             print("\n  🌟 感谢使用嘉兴南湖导游系统！")
             print("  🌟 祝您在南湖度过愉快时光！")
             print("  🌟 '烟雨南湖，红色记忆 —— 欢迎再来！'\n")
             sys.exit(0)
         
-        action = menu_actions.get(choice)
-        if action:
-            action()
+        动作 = 菜单动作.get(选择)
+        if 动作:
+            动作()
         else:
             print("\n  ❌ 无效选择，请重新输入。")
-            wait_for_enter()
+            等待回车()
 
 
 # ========== 程序入口 ==========
 
 if __name__ == "__main__":
     try:
-        run()
+        运行()
     except KeyboardInterrupt:
-        clear_screen()
+        清屏()
         print("\n\n  🌟 感谢使用嘉兴南湖导游系统！再见！\n")
         sys.exit(0)
     except Exception as e:
