@@ -8,11 +8,11 @@ from tkinter import scrolledtext, filedialog, messagebox
 from PIL import Image, ImageTk
 
 
-# 安全：API Key 从环境变量 DEEPSEEK_API_KEY 读取
-api密钥 = os.environ.get("DEEPSEEK_API_KEY", "")
+# 安全：API Key 从环境变量 DeepSeek_API密钥 读取
+api密钥 = os.environ.get("DeepSeek_API密钥", "")
 if not api密钥:
-    print("⚠ 警告：环境变量 DEEPSEEK_API_KEY 未设置，AI 问答功能将不可用。")
-    print("  请创建 .env 文件并写入 DEEPSEEK_API_KEY=你的key")
+    print("⚠ 警告：环境变量 DeepSeek_API密钥 未设置，AI 问答功能将不可用。")
+    print("  请创建 .env 文件并写入 DeepSeek_API密钥=你的key")
 api地址 = "https://api.deepseek.com/chat/completions"
 模型 = "deepseek-chat"
 
