@@ -596,27 +596,13 @@ class 主窗口:
         self.chat_display.tag_config("thinking", foreground="#888888",
                                      font=("微软雅黑", 10, "italic"))
 
-        # 构建消息体
+        # 构建消息体（DeepSeek 不支持图片多模态，有图片时只发文本）
         if has_image and img_path:
-            # 多模态消息
-            data_uri = 图片转base64(img_path)
-            if data_uri:
-                user_content = []
-                if user_text:
-                    user_content.append({"type": "text", "text": user_text})
-                user_content.append({
-                    "type": "image_url",
-                    "image_url": {"url": data_uri},
-                })
-                request_messages = self.messages + [
-                    {"role": "user", "content": user_content}
-                ]
-            else:
-                # base64 失败，回退纯文本
-                fallback_text = user_text or "请识别这张图片中是什么景点"
-                request_messages = self.messages + [
-                    {"role": "user", "content": fallback_text}
-                ]
+            # 只发文本，不加图片数据（API 不支持 image_url）
+            text_to_send = user_text or "请介绍一下这张图片中的景点"
+            request_messages = self.messages + [
+                {"role": "user", "content": text_to_send}
+            ]
         else:
             request_messages = self.messages + [
                 {"role": "user", "content": user_text}
