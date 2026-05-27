@@ -150,6 +150,7 @@ class 主窗口:
         self.root = root
         self._朗读引擎 = None
         self._朗读中 = False
+        self._tts内联按钮 = []  # 每个AI回复后的朗读按钮引用列表
         root.title("嘉兴南湖导游系统")
         root.geometry("1024x620")
         root.resizable(True, True)
@@ -457,9 +458,12 @@ class 主窗口:
         self.换掉(self.chat_frame)
         self.entry.focus_set()
 
-    def 朗读_通用(self, 文本):
-        """底层朗读函数：用Windows中文语音朗读文本"""
+    def 朗读_通用(self, 文本, 完成回调=None):
+        """底层朗读函数：用Windows中文语音朗读文本
+           完成回调：朗读结束后在主线程调用（可选）"""
         if not 文本 or not 文本.strip():
+            if 完成回调:
+                完成回调()
             return
 
         # 如果正在朗读，先停止
@@ -480,11 +484,13 @@ class 主窗口:
             finally:
                 self._朗读中 = False
                 self._朗读引擎 = None
+                if 完成回调:
+                    self.root.after(0, 完成回调)
 
         _t.Thread(target=朗读, daemon=True).start()
 
     def 停止朗读(self):
-        """停止当前朗读"""
+        """停止当前朗读，并重置所有内联朗读按钮"""
         self._朗读中 = False
         if self._朗读引擎 is not None:
             try:
@@ -492,6 +498,53 @@ class 主窗口:
             except Exception:
                 pass
             self._朗读引擎 = None
+        # 重置所有内联按钮为"朗读"状态
+        self._重置内联按钮()
+
+    def _重置内联按钮(self):
+        """将所有内联朗读按钮恢复为「🔊 朗读」状态"""
+        for btn in self._tts内联按钮[:]:
+            try:
+                btn.config(text="🔊 朗读", bg="#E8E8E8", fg="#333333")
+            except Exception:
+                pass
+
+    def _添加内联朗读按钮(self, reply_text):
+        """在AI回复后嵌入一个朗读/停止切换按钮"""
+        self.chat_display.config(state=tk.NORMAL)
+
+        btn_frame = tk.Frame(self.chat_display, bg=LIGHT)
+        tts_btn = tk.Button(btn_frame, text="🔊 朗读", font=("微软雅黑", 9),
+                            bg="#E8E8E8", fg="#333333", relief=tk.FLAT,
+                            bd=0, padx=6, pady=1, cursor="hand2",
+                            activebackground="#D0D0D0")
+        tts_btn.pack(side=tk.LEFT, padx=(4, 0))
+
+        # 记录按钮引用
+        self._tts内联按钮.append(tts_btn)
+
+        def 切换朗读():
+            if tts_btn.cget("text") == "🔊 朗读":
+                # 切换到停止状态 → 开始朗读
+                tts_btn.config(text="⏹ 停止", bg="#FFD4D4", fg="#C41E24")
+                # 朗读完成后的回调：恢复按钮
+                def 朗读完成():
+                    try:
+                        tts_btn.config(text="🔊 朗读", bg="#E8E8E8", fg="#333333")
+                    except Exception:
+                        pass
+                self.朗读_通用(reply_text, 朗读完成)
+            else:
+                # 单击停止 → 停止朗读
+                self.停止朗读()
+                # 停止朗读中的 _重置内联按钮 已经恢复所有按钮
+
+        tts_btn.config(command=切换朗读)
+
+        self.chat_display.window_create(tk.END, window=btn_frame)
+        self.chat_display.insert(tk.END, "\n")
+        self.chat_display.see(tk.END)
+        self.chat_display.config(state=tk.DISABLED)
 
     def 朗读当前介绍(self):
         """朗读左侧文本区的当前景点介绍内容"""
@@ -616,6 +669,8 @@ class 主窗口:
             self.加一句(f"\n【AI】{reply}\n\n", "ai_msg")
             self.chat_display.tag_config("ai_msg", foreground="#333333",
                                          font=("微软雅黑", 10))
+            # 在每个AI回复后添加朗读/停止按钮
+            self._添加内联朗读按钮(reply)
             # 只保存文本到历史（不存图片 base64，避免上下文膨胀）
             if user_text:
                 self.messages.append({"role": "user", "content": user_text})
