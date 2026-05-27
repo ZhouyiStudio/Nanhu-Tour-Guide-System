@@ -157,7 +157,7 @@ class 主窗口:
         root.minsize(860, 520)
 
         RED = "#C41E24"
-        LIGHT = "#FFF5F0"
+        self.LIGHT = "#FFF5F0"
 
         main = tk.Frame(root)
         main.pack(fill=tk.BOTH, expand=True)
@@ -210,7 +210,7 @@ class 主窗口:
         self.text_tts_stop_btn.pack(side=tk.RIGHT, padx=2, pady=3)
 
         self.text = scrolledtext.ScrolledText(text_container, font=("微软雅黑", 11),
-                                              bg=LIGHT, fg="#333333",
+                                              bg=self.LIGHT, fg="#333333",
                                               wrap=tk.WORD, bd=0, padx=15, pady=15)
         self.text.pack(fill=tk.BOTH, expand=True)
 
@@ -513,7 +513,7 @@ class 主窗口:
         """在AI回复后嵌入一个朗读/停止切换按钮"""
         self.chat_display.config(state=tk.NORMAL)
 
-        btn_frame = tk.Frame(self.chat_display, bg=LIGHT)
+        btn_frame = tk.Frame(self.chat_display, bg=self.LIGHT)
         tts_btn = tk.Button(btn_frame, text="🔊 朗读", font=("微软雅黑", 9),
                             bg="#E8E8E8", fg="#333333", relief=tk.FLAT,
                             bd=0, padx=6, pady=1, cursor="hand2",
