@@ -1,4 +1,4 @@
-# 嘉兴南湖导游系统 🏛
+# 嘉兴南湖导游系统
 
 基于 Python Tkinter 的南湖景区智能导游桌面应用，支持景点导览、AI 问答、语音朗读、图片查看等功能。
 
@@ -8,7 +8,7 @@
 - **AI 问答** — 接入 DeepSeek Chat 大模型，智能回答游客问题
 - **语音朗读** — Windows TTS 中文朗读，支持停止
 - **图片查看** — 景点图片缩略图展示，点击放大查看
-- **图片问答** — 发送图片给 AI，识别景点或获取相关信息
+- **图片问答** — 发送图片给AI，识别景点或获取相关信息
 
 ## 运行
 
@@ -19,7 +19,7 @@ python nhguide.py
 
 ## 截图
 
-![主界面](assets/images/thumb_yanyulou.jpg)
+<img width="1920" height="1080" alt="主界面" src="https://github.com/user-attachments/assets/b9cb6fcf-49ab-4e5c-9881-8139dd64e7b1" />
 
 ## 技术栈
 
